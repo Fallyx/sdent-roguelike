@@ -32,30 +32,26 @@ public class Player : MonoBehaviour {
     private void GetInput()
     {
         direction = Vector2.zero;
-        rbody.velocity = new Vector2(0, 0);
 
         if(Input.GetKey(KeyCode.W))
         {
             direction += Vector2.up;
-            rbody.velocity = new Vector2(0, speed);
         }
 
         if (Input.GetKey(KeyCode.A))
         {
             direction += Vector2.left;
-            rbody.velocity = new Vector2(-speed, 0);
         }
 
         if (Input.GetKey(KeyCode.S))
         {
             direction += Vector2.down;
-            rbody.velocity = new Vector2(0, -speed);
         }
 
         if (Input.GetKey(KeyCode.D))
         {
             direction += Vector2.right;
-            rbody.velocity = new Vector2(speed, 0);
         }
+        rbody.velocity = direction.normalized * speed;
     }
 }
