@@ -7,6 +7,10 @@ public class Player : MonoBehaviour {
     [SerializeField]
     private float speed;
 
+
+    [SerializeField]
+    private float dashSpeed;
+
     private Vector2 direction;
     private Rigidbody2D rbody;
     private bool facingLeft;
@@ -72,15 +76,15 @@ public class Player : MonoBehaviour {
         {
             if(dashCooldown < 1)
             {
-                rbody.AddForce(direction.normalized * 1500);
+                rbody.AddForce(direction.normalized * dashSpeed);
                 dashCooldown = 30;
-                GetComponent<ParticleSystem>().Play();
+                //GetComponent<ParticleSystem>().Play();
             }
             
         }
         if(dashCooldown == 15)
         {
-            GetComponent<ParticleSystem>().Stop();
+            //GetComponent<ParticleSystem>().Stop();
         }
         dashCooldown--;
     }
