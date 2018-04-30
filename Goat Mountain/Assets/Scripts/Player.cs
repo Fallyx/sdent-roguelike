@@ -9,6 +9,7 @@ public class Player : MonoBehaviour {
 
     private Vector2 direction;
     private Rigidbody2D rbody;
+    private bool facingLeft;
 
 	// Use this for initialization
 	void Start ()
@@ -22,7 +23,8 @@ public class Player : MonoBehaviour {
     {
         GetInput();
         // Move();
-	}
+
+    }
 
     private void Move()
     {
@@ -53,5 +55,15 @@ public class Player : MonoBehaviour {
             direction += Vector2.right;
         }
         rbody.velocity = direction.normalized * speed;
+        if(direction.x < 0)
+        {
+            facingLeft = true;
+        }
+        else if (direction.x > 0)
+        {
+
+            facingLeft = false;
+        }
+        GetComponent<SpriteRenderer>().flipX = facingLeft;
     }
 }
