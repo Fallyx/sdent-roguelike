@@ -10,6 +10,7 @@ public class Player : MonoBehaviour {
     private Vector2 direction;
     private Rigidbody2D rbody;
     private bool facingLeft;
+    private int dashCooldown = 0;
 
 	// Use this for initialization
 	void Start ()
@@ -54,7 +55,8 @@ public class Player : MonoBehaviour {
         {
             direction += Vector2.right;
         }
-        rbody.velocity = direction.normalized * speed;
+        //rbody.velocity = direction.normalized * speed;
+        rbody.AddForce(direction.normalized * speed);
         if(direction.x < 0)
         {
             facingLeft = true;
@@ -65,5 +67,21 @@ public class Player : MonoBehaviour {
             facingLeft = false;
         }
         GetComponent<SpriteRenderer>().flipX = facingLeft;
+
+        if (Input.GetKey(KeyCode.J))
+        {
+            if(dashCooldown < 1)
+            {
+                rbody.AddForce(direction.normalized * 1500);
+                dashCooldown = 30;
+                GetComponent<ParticleSystem>().Play();
+            }
+            
+        }
+        if(dashCooldown == 15)
+        {
+            GetComponent<ParticleSystem>().Stop();
+        }
+        dashCooldown--;
     }
 }
