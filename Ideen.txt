@@ -1,0 +1,16 @@
+J: Normale Attacke
+K: Dash Attacke
+L: Schild
+
+
+Am Anfang nur ein kleines Schwert
+Kiste gibt grosses Schwert
+Ein Geheimraum gibt Dash Fähigkeit
+Ein anderer Geheimraum gibt Schild
+
+Kleine Monster überall auf der Map verteilt
+Grosses Monster bei grossen Räumen
+
+
+Endboss: 100% -> 50% Leben: Zauberer (Wirft Tränke)
+	 49% -> 0% Leben: Grosses Maul Monster (Spawnt Fledermäuse, Schiesst Flammen aus dem Mund)
