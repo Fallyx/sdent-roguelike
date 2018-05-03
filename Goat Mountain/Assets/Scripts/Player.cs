@@ -78,13 +78,13 @@ public class Player : MonoBehaviour {
             {
                 rbody.AddForce(direction.normalized * dashSpeed);
                 dashCooldown = 30;
-                //GetComponent<ParticleSystem>().Play();
+                GetComponent<ParticleSystem>().Play();
             }
             
         }
         if(dashCooldown == 15)
         {
-            //GetComponent<ParticleSystem>().Stop();
+            GetComponent<ParticleSystem>().Stop();
         }
         dashCooldown--;
     }
