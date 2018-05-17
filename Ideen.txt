@@ -1,9 +1,9 @@
-J: Normale Attacke
-K: Dash Attacke
-L: Schild
+J: Normale Attacke (fabio)
+K: Dash Attacke (fabio)
+L: Schild (fabio)
 
 
-Am Anfang nur ein kleines Schwert
+Am Anfang nur ein kleines Schwert (fabio)
 Kiste gibt grosses Schwert
 Ein Geheimraum gibt Dash Fähigkeit
 Ein anderer Geheimraum gibt Schild
