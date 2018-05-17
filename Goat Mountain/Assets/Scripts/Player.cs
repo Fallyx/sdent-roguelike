@@ -123,7 +123,11 @@ public class Player : MonoBehaviour {
 
         if (Input.GetKey(KeyCode.K)) //attack
         {
-
+            GetComponent<Animator>().SetBool("attacking", true);
+        }
+        else
+        {
+            GetComponent<Animator>().SetBool("attacking", false);
         }
 
         bool blockKeyHeld = Input.GetKey(KeyCode.L);
