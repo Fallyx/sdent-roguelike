@@ -60,6 +60,10 @@ public class Player : MonoBehaviour {
             Destroy(collision.gameObject);
            
         }
+        if(collision.gameObject.tag == "Teleporter")
+        {
+            transform.position = collision.transform.GetChild(0).position; // Teleporter has only 1 child: Waypoint
+        }
     }
 
     private void Move()
