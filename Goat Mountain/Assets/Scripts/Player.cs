@@ -32,6 +32,7 @@ public class Player : MonoBehaviour {
     private Rigidbody2D rbody;
     private bool facingLeft;
     private int dashCooldown = 0;
+    private int attackCooldown = 0;
     private bool isBlocking = false;
     private float blockSpeed;
     private float blockDashSpeed;
@@ -138,14 +139,24 @@ public class Player : MonoBehaviour {
         }
         dashCooldown--;
 
-        if (Input.GetKey(KeyCode.K)) //attack
+        if (Input.GetKey(KeyCode.K) && attackCooldown < 1) //attack
         {
-            GetComponent<Animator>().SetBool("attacking", true);
+            attackCooldown = 30;
+            if (facingLeft)
+            {
+                GetComponent<Animator>().SetBool("attackingLeft", true);
+            }
+            else
+            {
+                GetComponent<Animator>().SetBool("attacking", true);
+            }
         }
         else
         {
             GetComponent<Animator>().SetBool("attacking", false);
+            GetComponent<Animator>().SetBool("attackingLeft", false);
         }
+        attackCooldown--;
 
         bool blockKeyHeld = Input.GetKey(KeyCode.L);
         if (blockKeyHeld != isBlocking && hasShield)
