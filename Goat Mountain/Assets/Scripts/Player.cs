@@ -195,19 +195,19 @@ public class Player : MonoBehaviour {
 
     public void UnlockAbility(int drop)
     {
-        if(drop == 0)
+        if(drop == 0 && hasDash == false)
         {
             hasDash = true;
             ShowPanel("Dash has been activated!");
         }
-        else if(drop == 1)
+        else if(drop == 1 && hasUpgradedSword == false)
         {
             hasUpgradedSword = true;
             var sword = this.gameObject.transform.Find("sword").gameObject;
             sword.GetComponent<SwordBehaviour>().UnlockedGreaterSword();
             ShowPanel("Equiped Greater Sword!");
         }
-        else if(drop == 2)
+        else if(drop == 2 && hasShield == false)
         {
             hasShield = true;
             ShowPanel("Equiped Shield!");
