@@ -26,9 +26,10 @@ public class ChestBehaviour : MonoBehaviour {
         		
 	}
 
-    void OpenChest(GameObject player)
+    public void OpenChest(GameObject player)
     {
         this.gameObject.GetComponent<SpriteRenderer>().sprite = chestOpened;
-        player.SendMessage("UnlockAbility", drop);
+
+        player.GetComponent<Player>().UnlockAbility(drop);
     }
 }

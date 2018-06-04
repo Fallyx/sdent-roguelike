@@ -20,7 +20,7 @@ public class SwordBehaviour : MonoBehaviour {
 		
 	}
 
-    void UnlockedGreaterSword()
+    public void UnlockedGreaterSword()
     {
         this.gameObject.GetComponent<SpriteRenderer>().sprite = greaterSword;
     }

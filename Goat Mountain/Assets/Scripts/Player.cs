@@ -28,6 +28,9 @@ public class Player : MonoBehaviour {
     [SerializeField]
     private bool hasDash;
 
+    [SerializeField]
+    private GameObject DialogPanel;
+
     private Vector2 direction;
     private Rigidbody2D rbody;
     private bool facingLeft;
@@ -38,7 +41,8 @@ public class Player : MonoBehaviour {
     private float blockDashSpeed;
     private float currentSpeed;
     private float currentDashSpeed;
-
+    private bool dialogShowed;
+    private float dialogShowTime;
 
 	// Use this for initialization
 	void Start ()
@@ -50,6 +54,8 @@ public class Player : MonoBehaviour {
         currentDashSpeed = dashSpeed;
         blockSpeed = speed * blockSpeedFactor;
         blockDashSpeed = dashSpeed * blockSpeedFactor;
+
+
 	}
 
 
@@ -59,6 +65,14 @@ public class Player : MonoBehaviour {
     {
 
         GetInput();
+        if (dialogShowed)
+        {
+            dialogShowTime -= Time.deltaTime;
+            if(dialogShowTime < 0)
+            {
+                HidePanel();
+            }
+        }
         // Move();
 
     }
@@ -76,7 +90,10 @@ public class Player : MonoBehaviour {
         }
         if(collision.gameObject.tag == "Chest")
         {
-            collision.gameObject.SendMessage("OpenChest", this.gameObject);
+            if (collision.gameObject.GetComponent<ChestBehaviour>() != null)
+            {
+                collision.gameObject.GetComponent<ChestBehaviour>().OpenChest(this.gameObject);
+            }
         }
     }
 
@@ -176,21 +193,39 @@ public class Player : MonoBehaviour {
         }
     }
 
-    void UnlockAbility(int drop)
+    public void UnlockAbility(int drop)
     {
         if(drop == 0)
         {
             hasDash = true;
+            ShowPanel("Dash has been activated!");
         }
         else if(drop == 1)
         {
             hasUpgradedSword = true;
             var sword = this.gameObject.transform.Find("sword").gameObject;
-            sword.SendMessage("UnlockedGreaterSword");
+            sword.GetComponent<SwordBehaviour>().UnlockedGreaterSword();
+            ShowPanel("Equiped Greater Sword!");
         }
         else if(drop == 2)
         {
             hasShield = true;
+            ShowPanel("Equiped Shield!");
         }
+    }
+
+    private void ShowPanel(string dialogText)
+    {
+        var textGameObject = DialogPanel.transform.Find("DialogText").gameObject;
+        textGameObject.GetComponent<ChangeText>().UpdateText(dialogText);
+
+        dialogShowed = true;
+        DialogPanel.SetActive(true);
+        dialogShowTime = 5.0f;
+    }
+
+    private void HidePanel()
+    {
+        DialogPanel.SetActive(false);
     }
 }
