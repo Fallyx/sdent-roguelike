@@ -19,6 +19,15 @@ public class Player : MonoBehaviour {
     [SerializeField]
     private GameObject shield;
 
+    [SerializeField]
+    private bool hasShield;
+
+    [SerializeField]
+    private bool hasUpgradedSword;
+
+    [SerializeField]
+    private bool hasDash;
+
     private Vector2 direction;
     private Rigidbody2D rbody;
     private bool facingLeft;
@@ -63,6 +72,10 @@ public class Player : MonoBehaviour {
         if(collision.gameObject.tag == "Teleporter")
         {
             transform.position = collision.transform.GetChild(0).position; // Teleporter has only 1 child: Waypoint
+        }
+        if(collision.gameObject.tag == "Chest")
+        {
+            collision.gameObject.SendMessage("OpenChest", this.gameObject);
         }
     }
 
@@ -109,7 +122,7 @@ public class Player : MonoBehaviour {
         }
         GetComponent<SpriteRenderer>().flipX = facingLeft;
 
-        if (Input.GetKey(KeyCode.J)) //dash
+        if (Input.GetKey(KeyCode.J) && hasDash) //dash
         {
             if(dashCooldown < 1)
             {
@@ -135,7 +148,7 @@ public class Player : MonoBehaviour {
         }
 
         bool blockKeyHeld = Input.GetKey(KeyCode.L);
-        if (blockKeyHeld != isBlocking)
+        if (blockKeyHeld != isBlocking && hasShield)
         {
             isBlocking = blockKeyHeld;
             shield.SetActive(isBlocking);
@@ -149,6 +162,24 @@ public class Player : MonoBehaviour {
                 currentSpeed = speed;
                 currentDashSpeed = dashSpeed;
             }
+        }
+    }
+
+    void UnlockAbility(int drop)
+    {
+        if(drop == 0)
+        {
+            hasDash = true;
+        }
+        else if(drop == 1)
+        {
+            hasUpgradedSword = true;
+            var sword = this.gameObject.transform.Find("sword").gameObject;
+            sword.SendMessage("UnlockedGreaterSword");
+        }
+        else if(drop == 2)
+        {
+            hasShield = true;
         }
     }
 }
