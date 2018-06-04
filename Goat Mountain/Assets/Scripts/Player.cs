@@ -111,7 +111,7 @@ public class Player : MonoBehaviour {
         rbody.AddForce(direction.normalized * currentSpeed);
         GetComponent<Animator>().SetBool("walking", direction.magnitude > 0.1);
 
-        if(direction.x < 0)
+        if (direction.x < 0)
         {
             facingLeft = true;
         }
