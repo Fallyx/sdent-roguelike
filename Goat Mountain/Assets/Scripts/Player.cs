@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour {
 
@@ -31,6 +32,16 @@ public class Player : MonoBehaviour {
     [SerializeField]
     private GameObject DialogPanel;
 
+    [SerializeField]
+    private Text healthText;
+
+    [SerializeField]
+    private Image healthbar;
+
+    [SerializeField]
+    private GameObject gameOverCanvas;
+
+    private int hp = 100;
     private Vector2 direction;
     private Rigidbody2D rbody;
     private bool facingLeft;
@@ -43,6 +54,9 @@ public class Player : MonoBehaviour {
     private float currentDashSpeed;
     private bool dialogShowed;
     private float dialogShowTime;
+    private bool recentlyHit = false;
+    private float recentlyHitTime = 2f;
+    private bool isDead = false;
 
 	// Use this for initialization
 	void Start ()
@@ -54,8 +68,6 @@ public class Player : MonoBehaviour {
         currentDashSpeed = dashSpeed;
         blockSpeed = speed * blockSpeedFactor;
         blockDashSpeed = dashSpeed * blockSpeedFactor;
-
-
 	}
 
 
@@ -63,25 +75,43 @@ public class Player : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-
-        GetInput();
-        if (dialogShowed)
+        if (!isDead)
         {
-            dialogShowTime -= Time.deltaTime;
-            if(dialogShowTime < 0)
+            GetInput();
+
+            if (dialogShowed)
             {
-                HidePanel();
+                dialogShowTime -= Time.deltaTime;
+                if (dialogShowTime < 0)
+                {
+                    HidePanel();
+                }
+            }
+            if (recentlyHit)
+            {
+                recentlyHitTime -= Time.deltaTime;
+                if (recentlyHitTime < 0)
+                {
+                    recentlyHit = false;
+                    GetComponent<Animator>().SetBool("hitByEnemy", false);
+                }
             }
         }
+        else
+        {
+            GameOver();
+        }
         // Move();
-
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.tag == "Enemy")
+        if(collision.gameObject.tag == "Enemy" && recentlyHit == false)
         {
-            Destroy(collision.gameObject);
+            //Destroy(collision.gameObject);
+            int dmg = collision.gameObject.GetComponent<Enemy>().GetEnemyDmg();
+
+            UpdateHealth(dmg);
            
         }
         if(collision.gameObject.tag == "Teleporter")
@@ -214,6 +244,25 @@ public class Player : MonoBehaviour {
         }
     }
 
+    private void UpdateHealth(int dmg)
+    {
+        recentlyHit = true;
+        recentlyHitTime = 2f;
+
+        hp = (hp -= dmg) < 0 ? 0 : hp; 
+        float hpFill = (float)hp;
+        hpFill /= 100;
+
+        healthText.GetComponent<ChangeText>().UpdateText(hp.ToString());
+        healthbar.GetComponent<HPBarBehaviour>().UpdateHPBar(hpFill);
+        GetComponent<Animator>().SetBool("hitByEnemy", true);
+
+        if (hp <= 0)
+        {
+            isDead = true;
+        }
+    }
+
     private void ShowPanel(string dialogText)
     {
         var textGameObject = DialogPanel.transform.Find("DialogText").gameObject;
@@ -227,5 +276,10 @@ public class Player : MonoBehaviour {
     private void HidePanel()
     {
         DialogPanel.SetActive(false);
+    }
+
+    private void GameOver()
+    {
+        gameOverCanvas.SetActive(true);
     }
 }

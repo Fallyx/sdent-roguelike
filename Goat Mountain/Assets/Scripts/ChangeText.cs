@@ -10,9 +10,7 @@ public class ChangeText : MonoBehaviour {
 	// Use this for initialization
 	void Start ()
     {
-        text = GetComponent<Text>();
-        UpdateText("");
-        this.transform.parent.gameObject.SetActive(false);
+
     }
 	
 	// Update is called once per frame

@@ -4,8 +4,11 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
+    [SerializeField]
+    private int dmg;
+
+    // Use this for initialization
+    void Start () {
 		
 	}
 	
@@ -20,4 +23,9 @@ public class Enemy : MonoBehaviour {
             GetComponent<Rigidbody2D>().AddForce(toPlayer.normalized * 0.5f);
         }
 	}
+
+    public int GetEnemyDmg()
+    {
+        return dmg;
+    }
 }
