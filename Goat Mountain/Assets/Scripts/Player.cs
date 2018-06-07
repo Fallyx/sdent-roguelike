@@ -249,13 +249,18 @@ public class Player : MonoBehaviour {
         recentlyHit = true;
         recentlyHitTime = 2f;
 
+        if (isBlocking)
+        {
+            dmg /= 2;
+        }
+
         hp = (hp -= dmg) < 0 ? 0 : hp; 
         float hpFill = (float)hp;
         hpFill /= 100;
 
         healthText.GetComponent<ChangeText>().UpdateText(hp.ToString());
         healthbar.GetComponent<HPBarBehaviour>().UpdateHPBar(hpFill);
-        GetComponent<Animator>().SetBool("hitByEnemy", true);
+        //GetComponent<Animator>().SetBool("hitByEnemy", true);
 
         if (hp <= 0)
         {
