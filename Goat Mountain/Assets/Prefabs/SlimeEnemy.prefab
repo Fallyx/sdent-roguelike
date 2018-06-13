@@ -232,6 +232,7 @@ MonoBehaviour:
   dmg: 5
   hpBar: {fileID: 114404310420525318}
   maxHealth: 33
+  speed: 15
 --- !u!212 &212149891530306310
 SpriteRenderer:
   m_ObjectHideFlags: 1

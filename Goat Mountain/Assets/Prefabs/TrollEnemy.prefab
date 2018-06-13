@@ -157,6 +157,7 @@ MonoBehaviour:
   dmg: 8
   hpBar: {fileID: 114501872470657466}
   maxHealth: 50
+  speed: 15
 --- !u!114 &114275048922374038
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -14,6 +14,9 @@ public class Enemy : MonoBehaviour {
     [SerializeField]
     private int maxHealth;
 
+    [SerializeField]
+    private int speed;
+
     private int health;
     
     private int hitCooldown;
@@ -34,15 +37,15 @@ public class Enemy : MonoBehaviour {
         if (toPlayer.magnitude < 7)
         {
             //GetComponent<Rigidbody2D>().
-            GetComponent<Rigidbody2D>().AddForce(toPlayer.normalized * 15);
+            GetComponent<Rigidbody2D>().AddForce(toPlayer.normalized * speed);
         }
         var direction = GetComponent<Rigidbody2D>().velocity;
 
-        if (direction.x < 0)
+        if (direction.x < 0.1)
         {
             facingRight = false;
         }
-        else if (direction.x > 0)
+        else if (direction.x > 0.1)
         {
 
             facingRight = true;

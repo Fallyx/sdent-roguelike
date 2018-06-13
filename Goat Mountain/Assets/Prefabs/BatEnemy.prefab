@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 50834817797722676}
   - component: {fileID: 95010705996814318}
   - component: {fileID: 212212578593231118}
-  - component: {fileID: 114229377721167714}
+  - component: {fileID: 114282690426694732}
   - component: {fileID: 61267354555651266}
   m_Layer: 0
   m_Name: BatEnemy
@@ -106,7 +106,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!114 &114229377721167714
+--- !u!114 &114282690426694732
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -114,10 +114,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1933198883718788}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bcd4e32ad718111408ecf61749e9fd56, type: 3}
+  m_Script: {fileID: 11500000, guid: 933f86e1e9430f44aa48bfa493a90e14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dmg: 10
 --- !u!212 &212212578593231118
 SpriteRenderer:
   m_ObjectHideFlags: 1
