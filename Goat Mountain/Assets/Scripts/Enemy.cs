@@ -29,10 +29,10 @@ public class Enemy : MonoBehaviour {
         var player = GameObject.Find("Character");
         var playerPos = player.transform.position;
         var toPlayer = playerPos - transform.position;
-        if (toPlayer.magnitude > 1)
+        if (toPlayer.magnitude < 7)
         {
             //GetComponent<Rigidbody2D>().
-            GetComponent<Rigidbody2D>().AddForce(toPlayer.normalized * 10);
+            GetComponent<Rigidbody2D>().AddForce(toPlayer.normalized * 15);
         }
 
         hitCooldown--;
@@ -53,7 +53,7 @@ public class Enemy : MonoBehaviour {
         hpBar.GetComponent<HPBarBehaviour>().UpdateHPBar(hpFill);
         if(health == 0)
         {
-            Destroy(this);
+            Destroy(gameObject);
         }
     }
 

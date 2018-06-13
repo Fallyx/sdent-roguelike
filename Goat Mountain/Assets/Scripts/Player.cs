@@ -15,9 +15,6 @@ public class Player : MonoBehaviour {
     private float dashSpeed;
 
     [SerializeField]
-    private int health;
-
-    [SerializeField]
     private GameObject shield;
 
     [SerializeField]
@@ -55,8 +52,9 @@ public class Player : MonoBehaviour {
     private bool dialogShowed;
     private float dialogShowTime;
     private bool recentlyHit = false;
-    private float recentlyHitTime = 2f;
+    private float recentlyHitTime;
     private bool isDead = false;
+    private float healCooldown = 0;
 
 	// Use this for initialization
 	void Start ()
@@ -96,6 +94,19 @@ public class Player : MonoBehaviour {
                     GetComponent<Animator>().SetBool("hitByEnemy", false);
                 }
             }
+
+            if(healCooldown <= 0)
+            {
+                if (hp < 100)
+                {
+                    UpdateHealth(hp+1);
+                }
+                healCooldown = 3;
+            }
+            else
+            {
+                healCooldown -= Time.deltaTime;
+            }
         }
         else
         {
@@ -104,14 +115,18 @@ public class Player : MonoBehaviour {
         // Move();
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnCollisionStay2D(Collision2D collision)
     {
         if(collision.gameObject.tag == "Enemy" && recentlyHit == false)
         {
-            //Destroy(collision.gameObject);
-            int dmg = collision.gameObject.GetComponent<Enemy>().GetEnemyDmg();
+            var enemy = collision.gameObject.GetComponent<Enemy>();
+            var enemyPos = enemy.transform.position;
+            var toEnemy = enemyPos - transform.position;
+            enemy.GetComponent<Rigidbody2D>().AddForce(toEnemy.normalized * 200);
+            GetComponent<Rigidbody2D>().AddForce(toEnemy.normalized * -200);
 
-            UpdateHealth(dmg);
+            int dmg = enemy.GetEnemyDmg();
+            ApplyDamage(dmg);
            
         }
         if(collision.gameObject.tag == "Teleporter")
@@ -244,17 +259,22 @@ public class Player : MonoBehaviour {
         }
     }
 
-    private void UpdateHealth(int dmg)
+    public void ApplyDamage(int dmg)
     {
         recentlyHit = true;
-        recentlyHitTime = 2f;
+        recentlyHitTime = 1f;
 
         if (isBlocking)
         {
             dmg /= 2;
         }
+        UpdateHealth((hp -= dmg) < 0 ? 0 : hp);
+    }
 
-        hp = (hp -= dmg) < 0 ? 0 : hp; 
+    private void UpdateHealth(int newHp)
+    {
+        hp = newHp;
+
         float hpFill = (float)hp;
         hpFill /= 100;
 
