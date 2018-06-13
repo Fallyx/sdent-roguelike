@@ -18,6 +18,8 @@ public class Enemy : MonoBehaviour {
     
     private int hitCooldown;
 
+    private bool facingRight;
+
     // Use this for initialization
     void Start () {
         health = maxHealth;
@@ -34,6 +36,18 @@ public class Enemy : MonoBehaviour {
             //GetComponent<Rigidbody2D>().
             GetComponent<Rigidbody2D>().AddForce(toPlayer.normalized * 15);
         }
+        var direction = GetComponent<Rigidbody2D>().velocity;
+
+        if (direction.x < 0)
+        {
+            facingRight = false;
+        }
+        else if (direction.x > 0)
+        {
+
+            facingRight = true;
+        }
+        GetComponent<SpriteRenderer>().flipX = facingRight;
 
         hitCooldown--;
 	}
