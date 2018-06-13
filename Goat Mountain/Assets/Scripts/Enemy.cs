@@ -70,6 +70,7 @@ public class Enemy : MonoBehaviour {
         hpBar.GetComponent<HPBarBehaviour>().UpdateHPBar(hpFill);
         if(health == 0)
         {
+            GetComponent<AudioSource>().Play();
             Destroy(gameObject);
         }
     }

@@ -34,6 +34,7 @@ public class SwordBehaviour : MonoBehaviour {
         if (collision.gameObject.tag == "Enemy")
         {
             collision.gameObject.GetComponent<Enemy>().ApplyDamage(isGreaterSword? 20:10);
+            GetComponent<AudioSource>().Play();
         }
     }
 

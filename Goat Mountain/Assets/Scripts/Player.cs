@@ -37,6 +37,10 @@ public class Player : MonoBehaviour {
 
     [SerializeField]
     private GameObject gameOverCanvas;
+    
+    private AudioSource hurtSound;
+    private AudioSource deathtSound;
+    private AudioSource dashSound;
 
     private int hp = 100;
     private Vector2 direction;
@@ -66,6 +70,11 @@ public class Player : MonoBehaviour {
         currentDashSpeed = dashSpeed;
         blockSpeed = speed * blockSpeedFactor;
         blockDashSpeed = dashSpeed * blockSpeedFactor;
+
+        var sounds = GetComponents<AudioSource>();
+        hurtSound = sounds[0];
+        deathtSound = sounds[1];
+        dashSound = sounds[2];
 	}
 
 
@@ -192,6 +201,7 @@ public class Player : MonoBehaviour {
                 rbody.AddForce(direction.normalized * currentDashSpeed);
                 dashCooldown = 30;
                 GetComponent<ParticleSystem>().Play();
+                dashSound.Play();
             }
             
         }
@@ -250,12 +260,12 @@ public class Player : MonoBehaviour {
             hasUpgradedSword = true;
             var sword = this.gameObject.transform.Find("sword").gameObject;
             sword.GetComponent<SwordBehaviour>().UnlockedGreaterSword();
-            ShowPanel("Equiped Greater Sword!");
+            ShowPanel("Equipped Greater Sword!");
         }
         else if(drop == 2 && hasShield == false)
         {
             hasShield = true;
-            ShowPanel("Equiped Shield!");
+            ShowPanel("Equipped Shield!");
         }
     }
 
@@ -268,6 +278,7 @@ public class Player : MonoBehaviour {
         {
             dmg /= 2;
         }
+        hurtSound.Play();
         UpdateHealth((hp -= dmg) < 0 ? 0 : hp);
     }
 
@@ -282,9 +293,11 @@ public class Player : MonoBehaviour {
         healthbar.GetComponent<HPBarBehaviour>().UpdateHPBar(hpFill);
         //GetComponent<Animator>().SetBool("hitByEnemy", true);
 
-        if (hp <= 0)
+        if (hp <= 0 && !isDead)
         {
             isDead = true;
+
+            deathtSound.Play();
         }
     }
 

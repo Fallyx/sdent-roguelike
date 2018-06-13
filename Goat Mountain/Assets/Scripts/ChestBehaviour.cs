@@ -14,6 +14,8 @@ public class ChestBehaviour : MonoBehaviour {
     [SerializeField]
     private int drop;
 
+    private bool isOpen = false;
+
 	// Use this for initialization
 	void Start ()
     {
@@ -28,8 +30,15 @@ public class ChestBehaviour : MonoBehaviour {
 
     public void OpenChest(GameObject player)
     {
-        this.gameObject.GetComponent<SpriteRenderer>().sprite = chestOpened;
 
-        player.GetComponent<Player>().UnlockAbility(drop);
+
+        if (!isOpen)
+        {
+            isOpen = true;
+
+            this.gameObject.GetComponent<SpriteRenderer>().sprite = chestOpened;
+            player.GetComponent<Player>().UnlockAbility(drop);
+            GetComponent<AudioSource>().Play();
+        }
     }
 }
