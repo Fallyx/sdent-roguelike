@@ -6449,7 +6449,7 @@ MonoBehaviour:
   dmg: 16
   hpBar: {fileID: 1706761}
   maxHealth: 100
-  speed: 5
+  speed: 7
 --- !u!114 &115963197
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26679,7 +26679,7 @@ MonoBehaviour:
   dmg: 12
   hpBar: {fileID: 1653725212}
   maxHealth: 100
-  speed: 5
+  speed: 6
 --- !u!50 &981406295
 Rigidbody2D:
   serializedVersion: 4
