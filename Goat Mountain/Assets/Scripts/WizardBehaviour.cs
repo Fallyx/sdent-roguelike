@@ -7,6 +7,9 @@ public class WizardBehaviour : MonoBehaviour {
 
     private float potionSpawned = 0f;
 
+    [SerializeField]
+    private GameObject winCanvas;
+
 
 	// Use this for initialization
 	void Start () {
@@ -27,6 +30,14 @@ public class WizardBehaviour : MonoBehaviour {
             pot.gameObject.transform.position = transform.position + (toPlayer.normalized * 1);
             pot.GetComponent<BossProjectileBehaviour>().SetDirection(toPlayer);
             potionSpawned = 3.0f;
+        }
+    }
+
+    private void OnDestroy()
+    {
+        if (winCanvas != null)
+        {
+            winCanvas.SetActive(true);
         }
     }
 }
